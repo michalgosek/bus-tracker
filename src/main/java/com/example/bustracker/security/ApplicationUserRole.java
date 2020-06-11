@@ -1,10 +1,11 @@
-package com.example.bustracker.persistence.model;
+package com.example.bustracker.security;
 
-public class UserRole {
+
+public class ApplicationUserRole {
     private final Long userId;
     private final Long roleId;
 
-    public UserRole(Long userId, Long roleId) {
+    public ApplicationUserRole(Long userId, Long roleId) {
         this.userId = userId;
         this.roleId = roleId;
     }

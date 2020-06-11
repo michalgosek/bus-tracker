@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.example.bustracker.security.Role.*;
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,18 +31,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/index", "/js/*", "/css/*").permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/dashboard").hasAnyRole(ADMIN.toString(), DRIVER.toString(), USER.toString())
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .permitAll()
-                .defaultSuccessUrl("/admin", true)
+                .defaultSuccessUrl("/dashboard", true)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/index");
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,7 +49,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         daoAuthenticationProvider.setUserDetailsService(applicationUserService);

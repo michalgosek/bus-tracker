@@ -13,7 +13,7 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("admin")
+    @GetMapping("dashboard")
     public String getAdminView(){
         return "dashboard";
     }

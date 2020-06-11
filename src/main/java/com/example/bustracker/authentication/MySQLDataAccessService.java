@@ -1,9 +1,9 @@
 package com.example.bustracker.authentication;
 
 import com.example.bustracker.persistence.dao.ApplicationUserDAO;
-import com.example.bustracker.persistence.model.Roles;
+import com.example.bustracker.persistence.model.Role;
 import com.example.bustracker.persistence.model.User;
-import com.example.bustracker.persistence.model.UserRole;
+import com.example.bustracker.security.ApplicationUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -37,29 +37,29 @@ public class MySQLDataAccessService implements ApplicationUserDAO {
         return jdbcTemplate.query(query, mapUserFromDatabase());
     }
 
-    private List<Roles> getApplicationRoles(){
+    private List<Role> getApplicationRoles() {
         final String query = "SELECT id, name FROM roles";
         return jdbcTemplate.query(query, mapRolesFromDatabase());
     }
 
-    private List<UserRole> getApplicationUserRole(){
+    private List<ApplicationUserRole> getApplicationUserRole() {
         final String query = "SELECT user_id, role_id FROM users_roles";
         return jdbcTemplate.query(query, mapApplicationUserRole());
     }
 
-    private RowMapper<UserRole> mapApplicationUserRole(){
+    private RowMapper<ApplicationUserRole> mapApplicationUserRole() {
         return (resultSet, i) -> {
             final Long userId = resultSet.getLong("user_id");
             final Long roleId = resultSet.getLong("role_id");
-            return new UserRole(userId, roleId);
+            return new ApplicationUserRole(userId, roleId);
         };
     }
 
-    private RowMapper<Roles> mapRolesFromDatabase(){
+    private RowMapper<Role> mapRolesFromDatabase() {
         return (resultSet, i) -> {
             final Long id = resultSet.getLong("id");
             final String name = resultSet.getString("name");
-            return new Roles(id, name);
+            return new Role(id, name);
         };
     }
 
@@ -87,26 +87,19 @@ public class MySQLDataAccessService implements ApplicationUserDAO {
 
     @Override
     public Optional<ApplicationUser> loadUserByUsername(String username) {
-        final Optional<User> appUser = getApplicationUsers()
-                .stream().filter(user -> username.equals(user.getUsername())).findFirst();
+        final User appUser = getApplicationUsers().stream()
+                .filter(user -> username.equals(user.getUsername())).findFirst()
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        if (appUser.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        final Map<Long, String> roles = getApplicationRoles().stream().collect(Collectors.toMap(
-            Roles::getId, Roles::getName));
-
-        final Set<UserRole> appUserRole = getApplicationUserRole()
-                .stream().filter(userRole -> appUser.get().getId().equals(userRole.getUserId()))
-                .collect(Collectors.toSet());
+        final Map<Long, String> roles = getApplicationRoles().stream()
+                .collect(Collectors.toMap(Role::getId, Role::getName));
 
         final Set<SimpleGrantedAuthority> authorities =
                 getApplicationUserRole().stream()
-                .map(userRole -> new SimpleGrantedAuthority(roles.get(userRole.getRoleId())))
-                .collect(Collectors.toSet());
+                        .filter(user -> user.getUserId().equals(appUser.getId()))
+                        .map(user -> new SimpleGrantedAuthority(roles.get(user.getRoleId())))
+                        .collect(Collectors.toSet());
 
-        Optional<ApplicationUser> applicationUser = Optional.of(new ApplicationUser(appUser.get(), authorities));
-        return applicationUser;
+        return Optional.of(new ApplicationUser(appUser, authorities));
     }
 }
