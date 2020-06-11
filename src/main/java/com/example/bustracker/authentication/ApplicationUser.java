@@ -1,6 +1,5 @@
 package com.example.bustracker.authentication;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import com.example.bustracker.persistence.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
