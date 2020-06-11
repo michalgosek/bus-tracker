@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Roles {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
@@ -14,7 +14,7 @@ public class Roles {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-    public Roles(Long id, String name) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
     }
