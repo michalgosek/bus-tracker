@@ -1,0 +1,21 @@
+# MySQL connection properties
+mysql:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: doom2020
+    jdbcUrl: jdbc:mysql://localhost:3306/mydb133?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    maximumPoolSize: 10
+
+# Spring configuration:
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+
+
