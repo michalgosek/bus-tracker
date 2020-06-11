@@ -37,17 +37,17 @@ public class MySQLDataAccessService implements ApplicationUserDAO {
         return jdbcTemplate.query(query, mapUserFromDatabase());
     }
 
-    private List<Roles> getApplicationRoles(){
+    private List<Roles> getApplicationRoles() {
         final String query = "SELECT id, name FROM roles";
         return jdbcTemplate.query(query, mapRolesFromDatabase());
     }
 
-    private List<UserRole> getApplicationUserRole(){
+    private List<UserRole> getApplicationUserRole() {
         final String query = "SELECT user_id, role_id FROM users_roles";
         return jdbcTemplate.query(query, mapApplicationUserRole());
     }
 
-    private RowMapper<UserRole> mapApplicationUserRole(){
+    private RowMapper<UserRole> mapApplicationUserRole() {
         return (resultSet, i) -> {
             final Long userId = resultSet.getLong("user_id");
             final Long roleId = resultSet.getLong("role_id");
@@ -55,7 +55,7 @@ public class MySQLDataAccessService implements ApplicationUserDAO {
         };
     }
 
-    private RowMapper<Roles> mapRolesFromDatabase(){
+    private RowMapper<Roles> mapRolesFromDatabase() {
         return (resultSet, i) -> {
             final Long id = resultSet.getLong("id");
             final String name = resultSet.getString("name");
@@ -87,26 +87,19 @@ public class MySQLDataAccessService implements ApplicationUserDAO {
 
     @Override
     public Optional<ApplicationUser> loadUserByUsername(String username) {
-        final Optional<User> appUser = getApplicationUsers()
-                .stream().filter(user -> username.equals(user.getUsername())).findFirst();
+        final User appUser = getApplicationUsers().stream()
+                .filter(user -> username.equals(user.getUsername())).findFirst()
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        if (appUser.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        final Map<Long, String> roles = getApplicationRoles().stream().collect(Collectors.toMap(
-            Roles::getId, Roles::getName));
-
-        final Set<UserRole> appUserRole = getApplicationUserRole()
-                .stream().filter(userRole -> appUser.get().getId().equals(userRole.getUserId()))
-                .collect(Collectors.toSet());
+        final Map<Long, String> roles = getApplicationRoles().stream()
+                .collect(Collectors.toMap(Roles::getId, Roles::getName));
 
         final Set<SimpleGrantedAuthority> authorities =
                 getApplicationUserRole().stream()
-                .map(userRole -> new SimpleGrantedAuthority(roles.get(userRole.getRoleId())))
-                .collect(Collectors.toSet());
+                        .filter(user -> user.getUserId().equals(appUser.getId()))
+                        .map(user -> new SimpleGrantedAuthority(roles.get(user.getRoleId())))
+                        .collect(Collectors.toSet());
 
-        Optional<ApplicationUser> applicationUser = Optional.of(new ApplicationUser(appUser.get(), authorities));
-        return applicationUser;
+        return Optional.of(new ApplicationUser(appUser, authorities));
     }
 }
