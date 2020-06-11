@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.example.bustracker.security.Role.*;
+import static com.example.bustracker.security.ApplicationUserRole.*;
 
 @Configuration
 @EnableWebSecurity
