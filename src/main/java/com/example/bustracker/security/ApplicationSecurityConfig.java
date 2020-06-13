@@ -30,7 +30,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/js/*", "/css/*").permitAll()
+                .antMatchers("/", "/index", "/streets", "/js/*", "/css/*").permitAll()
                 .antMatchers("/dashboard").hasAnyRole(ADMIN.toString(), DRIVER.toString(), USER.toString())
                 .anyRequest()
                 .authenticated()
