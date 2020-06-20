@@ -12,9 +12,9 @@ public class IndexController {
     public String getIndexView(){
         return "index";
     }
-
+    
     @GetMapping("dashboard")
     public String getAdminView(){
-        return "dashboard";
+        return "account/dashboard";
     }
 }

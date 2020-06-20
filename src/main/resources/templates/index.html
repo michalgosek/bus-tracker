@@ -1,17 +1,19 @@
 <!doctype html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:insert="~{fragments/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 <head>
-
+    <title>Bustracker</title>
 </head>
 <body>
-
-
-<nav th:insert="~{navigation :: nav-login}"></nav>
-
-
-
-
+<section layout:fragment="content">
+    <div class="container">
+        <div class="jumbotron mt-3">
+            <h1>Hello World!</h1>
+            <p class="lead">Here will be placed content info about app.</p>
+        </div>
+    </div>
+</section>
 </body>
 </html>
