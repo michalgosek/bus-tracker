@@ -29,6 +29,4 @@ public class StreetDataAccessService {
             return new Street(id, streetName);
         };
     }
-
-
 }
