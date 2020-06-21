@@ -4,16 +4,29 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <head>
-    <title>Bustracker</title>
+    <title>Bustracker - Streets List</title>
 </head>
 <body>
 <section layout:fragment="content">
     <div class="container">
         <div class="jumbotron mt-3">
-            <h1>Hello World!</h1>
-            <p class="lead">Here will be placed content info about app.</p>
+            <div class="container">
+                <li class="list-group-item active">Streets:</li>
+                <ul class="list-group" th:each="street : ${streets}">
+                    <li class="list-group-item" th:text="${street.getName()}"></li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

@@ -7,14 +7,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.example.bustracker.security.Role.*;
+import static com.example.bustracker.security.ApplicationUserRole.*;
 
+
+@EnableWebSecurity(debug = true)
 @Configuration
-@EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ApplicationUserService applicationUserService;
@@ -27,11 +29,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/css/*", "/js/*");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/js/*", "/css/*").permitAll()
-                .antMatchers("/dashboard").hasAnyRole(ADMIN.toString(), DRIVER.toString(), USER.toString())
+                .antMatchers( "/", "/index", "/streets").permitAll()
+                .antMatchers("/api/**").hasRole(ADMIN.toString())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -40,7 +48,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/dashboard", true)
                 .and()
                 .logout()
-                .logoutSuccessUrl("/index");
+                    .invalidateHttpSession(true)  //set invalidation state when logout
+                    .deleteCookies("JSESSIONID")
+                    .logoutSuccessUrl("/index");
     }
 
     @Override
@@ -55,6 +65,4 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setUserDetailsService(applicationUserService);
         return daoAuthenticationProvider;
     }
-
-
 }
