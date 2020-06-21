@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("api/v1/streets/")
-public class TestController {
+public class StreetManagementController {
 
     @GetMapping("get")
     public String getStreets2(){

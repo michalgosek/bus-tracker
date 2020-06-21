@@ -1,5 +1,7 @@
-package com.example.bustracker.city.street;
+package com.example.bustracker.city.street.dataaccess;
 
+import com.example.bustracker.city.street.Street;
+import com.example.bustracker.dao.StreetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -7,17 +9,17 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public class StreetDataAccessService {
+@Repository("MySQLStreet")
+public class MySQLDataAccessService implements StreetDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public StreetDataAccessService(JdbcTemplate jdbcTemplate) {
+    public MySQLDataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    List<Street> selectStreets(){
+    public List<Street> selectStreets(){
         final String query = "SELECT * FROM streets";
         return jdbcTemplate.query(query, mapStreetFromDatabse());
     }

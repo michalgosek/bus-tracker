@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("streets")
-public class StreetController {
+public class StreetController{
 
     private final StreetService streetService;
 

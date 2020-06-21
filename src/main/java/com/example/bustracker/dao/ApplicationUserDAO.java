@@ -1,4 +1,4 @@
-package com.example.bustracker.persistence.dao;
+package com.example.bustracker.dao;
 
 import com.example.bustracker.authentication.ApplicationUser;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

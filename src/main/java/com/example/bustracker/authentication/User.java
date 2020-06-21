@@ -1,4 +1,4 @@
-package com.example.bustracker.persistence.model;
+package com.example.bustracker.authentication;
 
 import javax.persistence.*;
 import java.util.Set;

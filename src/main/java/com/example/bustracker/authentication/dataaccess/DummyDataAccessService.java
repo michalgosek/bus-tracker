@@ -1,7 +1,8 @@
-package com.example.bustracker.authentication;
+package com.example.bustracker.authentication.dataaccess;
 
-import com.example.bustracker.persistence.dao.ApplicationUserDAO;
-import com.example.bustracker.persistence.model.User;
+import com.example.bustracker.authentication.ApplicationUser;
+import com.example.bustracker.authentication.User;
+import com.example.bustracker.dao.ApplicationUserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
