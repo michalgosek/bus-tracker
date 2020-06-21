@@ -1,26 +1,29 @@
 package com.example.bustracker.city.street;
 
-import com.example.bustracker.city.street.dataaccess.MySQLDataAccessService;
+import com.example.bustracker.dao.StreetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
-public class StreetService implements StreetDetailsService {
-
-    private final MySQLDataAccessService mySQLDataAccessService;
+public class StreetService  {
+    private final StreetDAO streetDAO;
 
     @Autowired
-    public StreetService(@Qualifier("MySQLStreet") MySQLDataAccessService mySQLDataAccessService) {
-        this.mySQLDataAccessService = mySQLDataAccessService;
+    public StreetService(@Qualifier("MySQLStreet") StreetDAO streetDAO) {
+        this.streetDAO = streetDAO;
     }
 
-    @Override
     public List<Street> getAllStreets() {
-        return mySQLDataAccessService.selectStreets();
+        return streetDAO.getAllStreets();
+    }
+
+    public Optional<Street> getStreetByName(String streetName) {
+        return streetDAO.getStreetByName(streetName);
     }
 }

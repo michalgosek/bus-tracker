@@ -4,7 +4,9 @@ package com.example.bustracker.dao;
 import com.example.bustracker.city.street.Street;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StreetDAO {
-    List<Street> selectStreets();
+    List<Street> getAllStreets();
+    Optional<Street> getStreetByName(String streetName);
 }

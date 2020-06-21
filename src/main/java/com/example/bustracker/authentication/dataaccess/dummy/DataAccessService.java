@@ -1,4 +1,4 @@
-package com.example.bustracker.authentication.dataaccess;
+package com.example.bustracker.authentication.dataaccess.dummy;
 
 import com.example.bustracker.authentication.ApplicationUser;
 import com.example.bustracker.authentication.User;
@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("dummy")
-public class DummyDataAccessService implements ApplicationUserDAO {
+public class DataAccessService implements ApplicationUserDAO {
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DummyDataAccessService(PasswordEncoder passwordEncoder) {
+    public DataAccessService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 

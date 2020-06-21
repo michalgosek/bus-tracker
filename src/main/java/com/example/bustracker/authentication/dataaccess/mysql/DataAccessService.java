@@ -1,4 +1,4 @@
-package com.example.bustracker.authentication.dataaccess;
+package com.example.bustracker.authentication.dataaccess.mysql;
 
 import com.example.bustracker.authentication.ApplicationUser;
 import com.example.bustracker.authentication.Role;
@@ -16,12 +16,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository("MySQL")
-public class MySQLDataAccessService implements ApplicationUserDAO {
+public class DataAccessService implements ApplicationUserDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public MySQLDataAccessService(JdbcTemplate jdbcTemplate) {
+    public DataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
