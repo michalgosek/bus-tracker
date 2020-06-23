@@ -7,7 +7,6 @@
 <head>
     <title>Streets - Management</title>
 </head>
-
 <body>
 <header>
     <div class="container">
@@ -18,35 +17,46 @@
 <main>
     <section layout:fragment="content">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-4">
-                    <div class="jumbotron my-2">
-                        <div th:if="${street.getId() != 0}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Hey!</strong> provided street name exists inside street table. Remove it or update before adding.
+            <div class="row align-items-center my-2">
+                <div class="col-12">
+                    <div class="jumbotron">
+                        <div th:if="${street.getId() != -1}" class="alert alert-warning alert-dismissible fade show"
+                             role="alert">
+                            <strong>Hey!</strong> provided street name exists inside street table. Remove it or update
+                            before adding.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form class="form-inline mb-2" th:action="@{/api/v1/streets/add}" th:object="${street}"
+                        <form class="form-inline mb-2" th:action="@{/api/v1/streets/insert}" th:object="${street}"
                               method="post">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" th:field="*{name}">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                                   th:field="*{name}">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
-                        <form th:action="@{/api/v1/streets/add}" th:object="${street}" method="post">
+                        <div class="form-group mt-2 mb-1">
+                            <select class="custom-select" multiple>
+                                <option th:each="street : ${streets}" th:value="${street.getId()}" th:text="${street.getName()}" th:selected="*{id}"></option>
+                            </select>
+                        </div>
+                        <form th:action="@{/api/v1/streets/insert}" th:object="${street}" method="post">
                             <div class="form-group mt-2 mb-1">
-                                <label for="streetID">ID:</label>
-                                <input type="text" class="form-control" id="streetID" aria-describedby="streetIdHelp" readonly
-                                th:value="*{id}">
-                                <small id="streetIdHelp" class="form-text text-muted">ID only for reading purposes.</small>
+                                <label for="streetId">ID:</label>
+                                <input type="text" class="form-control" id="streetId" aria-describedby="streetIdHelp"
+                                       readonly
+                                       th:value="${street.getId() != -1} ? *{id} : null">
+                                <small id="streetIdHelp" class="form-text text-muted">ID only for reading
+                                    purposes.</small>
                             </div>
                             <div class="form-group mt-2 mb-1">
                                 <label for="streetInput">Street address:</label>
                                 <input type="text" class="form-control" id="streetInput" aria-describedby="streetHelp"
-                                       th:value="*{name}">
+                                       th:value="*{name}" th:field="*{name}">
                                 <small id="streetHelp" class="form-text text-muted">Before adding street make sure it
                                     exists.</small>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-danger"  th:formaction="@{/api/v1/streets/remove}" th:field="${street}">Delete</button>
                         </form>
                     </div>
                 </div>

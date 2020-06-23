@@ -26,4 +26,8 @@ public class StreetService  {
     public Optional<Street> getStreetByName(String streetName) {
         return streetDAO.getStreetByName(streetName);
     }
+
+    public void insertStudent(Street street) {
+        streetDAO.insertStreet(street);
+    }
 }
