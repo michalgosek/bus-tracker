@@ -38,4 +38,10 @@ public class DataAccessService implements StreetDAO {
         final String query = "INSERT INTO streets (id, name) VALUES (?, ?)";
         return jdbcTemplate.update(query, street.getId(), street.getName());
     }
+
+    @Override
+    public int deleteStreet(Long streetId) {
+        final String query = "DELETE FROM streets WHERE id = ?";
+        return jdbcTemplate.update(query, streetId);
+    }
 }

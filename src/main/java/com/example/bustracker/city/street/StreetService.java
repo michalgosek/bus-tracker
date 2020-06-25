@@ -27,7 +27,11 @@ public class StreetService  {
         return streetDAO.getStreetByName(streetName);
     }
 
-    public void insertStudent(Street street) {
+    public void insertStreet(Street street) {
         streetDAO.insertStreet(street);
+    }
+
+    public void deleteStreet(Long streetId){
+        streetDAO.deleteStreet(streetId);
     }
 }

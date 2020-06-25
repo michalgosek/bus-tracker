@@ -10,4 +10,5 @@ public interface StreetDAO {
     List<Street> getAllStreets();
     Optional<Street> getStreetByName(String streetName);
     int insertStreet(Street street);
+    int deleteStreet(Long streetId);
 }

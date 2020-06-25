@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("api/v1/streets/")
+@RequestMapping("api/v1/streets")
 public class StreetManagementController {
 
     private final StreetService streetService;
@@ -20,45 +20,37 @@ public class StreetManagementController {
     @Autowired
     public StreetManagementController(StreetService streetService) {
         this.streetService = streetService;
-        this.street = new Street((long) -1, "");
-
+        this.street = new Street();
     }
 
-    @GetMapping("get")
+    @GetMapping
     public String getStreets(Model model) {
         streetList = streetService.getAllStreets();
-        model.addAttribute("streets", streetList);
         model.addAttribute("street", street);
-        return "account/administrator/add_street";
+        model.addAttribute("streets", streetList);
+        return "account/administrator/street";
+    }
+
+    @PostMapping("search")
+    public String findStreet(@ModelAttribute Street street) {
+        streetService.getStreetByName(street.getName()).ifPresent(value -> this.street = value);
+        return "redirect:/api/v1/streets/";
     }
 
     @PostMapping("insert")
     public String addStreet(@ModelAttribute Street street, Model model) {
-        streetList = streetService.getAllStreets();
-        model.addAttribute("streets", streetList);
-        Optional<Street> res = streetService.getStreetByName(street.getName());
+        Optional<Street> target = streetService.getStreetByName(street.getName());
+        final boolean insert = street.getName().length() > 5 && target.isEmpty();
+        if (insert)
+            streetService.insertStreet(street);
 
-        res.ifPresentOrElse(value -> {
-            street.setId(value.getId());
-            street.setName(value.getName());
-        }, () -> {
-
-            // todo find better approach!
-            if (!street.getName().isEmpty() && street.getName().length() > 5) {
-                streetService.insertStudent(street);
-            }
-
-            street.setId((long) -1);
-            street.setName("");
-        });
-
-        return "account/administrator/add_street";
+        return "redirect:/api/v1/streets/";
     }
-
 
     @PostMapping("remove")
     public String removeStreet(@ModelAttribute Street street) {
-        System.out.println(street);
-        return "account/administrator/add_street";
+        Optional<Street> target = streetService.getStreetByName(street.getName());
+        target.ifPresent(value -> streetService.deleteStreet(value.getId()));
+        return "redirect:/api/v1/streets/";
     }
 }
