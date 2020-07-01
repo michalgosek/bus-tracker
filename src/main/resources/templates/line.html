@@ -18,7 +18,7 @@
 
                 <li class="list-group-item active">Lines:</li>
                 <ul class="list-group" th:each="line : ${lines}">
-                    <a type="button" class="list-group-item list-group-item-action" th:text="|${line.getLineNumber()} -> ${line.getDirection()}|" th:href="@{'/timetable/' + ${line.getId()}}"></a>
+                    <a type="button" class="list-group-item list-group-item-action" th:text="|${line.getLineNumber()} -> ${line.getDirection()}|" th:href="@{'/schedule/' + ${line.getId()}}"></a>
                 </ul>
             </div>
         </div>

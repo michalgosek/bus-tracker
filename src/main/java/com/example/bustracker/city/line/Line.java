@@ -1,7 +1,7 @@
 package com.example.bustracker.city.line;
 
 import com.example.bustracker.city.stop.Stop;
-import com.example.bustracker.city.timetable.Timetable;
+import com.example.bustracker.city.timetable.Schedule;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +22,7 @@ public class Line {
     private String direction;
 
     @OneToMany(mappedBy = "line", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Timetable> timetables;
+    private List<Schedule> schedules;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Stop stop;
@@ -32,5 +32,9 @@ public class Line {
         this.direction = direction;
         this.lineNumber = lineNumber;
         this.stop = new Stop(stopId);
+    }
+
+    public Line(Long id) {
+        this.id = id;
     }
 }

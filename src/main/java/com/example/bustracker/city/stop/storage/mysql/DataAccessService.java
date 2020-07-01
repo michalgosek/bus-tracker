@@ -1,7 +1,6 @@
 package com.example.bustracker.city.stop.storage.mysql;
 
 import com.example.bustracker.city.stop.Stop;
-import com.example.bustracker.city.street.Street;
 import com.example.bustracker.dao.StopDAO;
 import com.example.bustracker.extractor.Extractor;
 import org.springframework.beans.factory.annotation.Autowired;
