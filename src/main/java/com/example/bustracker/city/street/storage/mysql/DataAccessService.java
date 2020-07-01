@@ -34,6 +34,12 @@ public class DataAccessService implements StreetDAO {
     }
 
     @Override
+    public Optional<Street> getStreetById(Long id) {
+        final String query = "SELECT * FROM streets WHERE id = ?";
+        return jdbcTemplate.query(query, EXTRACTOR_STREET, id);
+    }
+
+    @Override
     public int insertStreet(Street street) {
         final String query = "INSERT INTO streets (id, name) VALUES (?, ?)";
         return jdbcTemplate.update(query, street.getId(), street.getName());

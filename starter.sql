@@ -7,7 +7,9 @@ INSERT INTO users_roles VALUES(1, 1);
 INSERT INTO users_roles VALUES(1, 2);
 INSERT INTO users_roles VALUES(2, 2);
 
-INSERT INTO streets VALUES(1, 'Wyspianskiego');
-INSERT INTO streets VALUES(2, 'Norwida');
-INSERT INTO streets VALUES(3, 'Warszawska');
-INSERT INTO streets VALUES(4, 'Tarnwoska');
+INSERT INTO streets VALUES(1, 'Warszawska');
+INSERT INTO streets VALUES(2, 'Wapiennikowa');
+
+INSERT INTO stops VALUES(1, 'Warszawska / Jaworskiego', 1);
+INSERT INTO stops VALUES(2, 'Warszawska / Orkana', 1);
+INSERT INTO stops VALUES(3, 'Wapiennikowa / Ściegiennego', 2);

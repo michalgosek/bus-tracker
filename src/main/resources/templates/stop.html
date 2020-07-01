@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Bustracker - Stops List</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <div class="jumbotron mt-3">
+            <div class="container">
+
+                <div th:if="not ${#strings.isEmpty(streetName)}">
+                    <p th:text="${streetName}"></p>
+                </div>
+
+                <li class="list-group-item active">Stops:</li>
+                <ul class="list-group" th:each="stop : ${stops}">
+                    <a type="button" class="list-group-item list-group-item-action" th:text="${stop.getName()}"></a>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</section>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

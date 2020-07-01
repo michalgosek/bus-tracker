@@ -1,10 +1,10 @@
 package com.example.bustracker.city.street;
 
+import com.example.bustracker.city.stop.StopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,11 +14,14 @@ import java.util.Optional;
 public class StreetManagementController {
 
     private final StreetService streetService;
+    private final StopService stopService;
+
     private Street street;
     private List<Street> streetList;
 
     @Autowired
-    public StreetManagementController(StreetService streetService) {
+    public StreetManagementController(StreetService streetService, StopService stopService) {
+        this.stopService = stopService;
         this.streetService = streetService;
         this.street = new Street();
     }
@@ -32,13 +35,13 @@ public class StreetManagementController {
     }
 
     @PostMapping("search")
-    public String findStreet(@ModelAttribute Street street) {
-        streetService.getStreetByName(street.getName()).ifPresent(value -> this.street = value);
+    public String findStreet(@RequestParam String streetName) {
+        streetService.getStreetByName(streetName).ifPresent(value -> this.street = value);
         return "redirect:/api/v1/streets/";
     }
 
     @PostMapping("insert")
-    public String addStreet(@ModelAttribute Street street, Model model) {
+    public String insertStreet(@ModelAttribute Street street) {
         Optional<Street> target = streetService.getStreetByName(street.getName());
         final boolean insert = street.getName().length() > 5 && target.isEmpty();
         if (insert)
@@ -50,7 +53,11 @@ public class StreetManagementController {
     @PostMapping("remove")
     public String removeStreet(@ModelAttribute Street street) {
         Optional<Street> target = streetService.getStreetByName(street.getName());
-        target.ifPresent(value -> streetService.deleteStreet(value.getId()));
+        if (target.isPresent()) {
+            stopService.deleteStopsWithStreetId(target.get().getId());
+            streetService.deleteStreet(target.get().getId());
+        }
+
         return "redirect:/api/v1/streets/";
     }
 }

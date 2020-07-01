@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class StreetService  {
+public class StreetService {
     private final StreetDAO streetDAO;
 
     @Autowired
@@ -27,11 +27,15 @@ public class StreetService  {
         return streetDAO.getStreetByName(streetName);
     }
 
+    public Optional<Street> getStreetById(Long id) {
+        return streetDAO.getStreetById(id);
+    }
+
     public void insertStreet(Street street) {
         streetDAO.insertStreet(street);
     }
 
-    public void deleteStreet(Long streetId){
+    public void deleteStreet(Long streetId) {
         streetDAO.deleteStreet(streetId);
     }
 }

@@ -5,7 +5,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{fragments/layout}">
 <head>
-    <title>Streets - Management</title>
+    <title>Stops - Management</title>
 </head>
 <body>
 <header>
@@ -20,48 +20,56 @@
             <div class="row align-items-center my-2">
                 <div class="col-12">
                     <div class="jumbotron">
-
-                        <div th:if="${street.getId() > 0}" class="alert alert-warning alert-dismissible fade show"
+                        <div th:if="${stop.getId() > 0}" class="alert alert-warning alert-dismissible fade show"
                              role="alert">
-                            <strong>Hey!</strong> provided street name exists inside street table. Remove it or update
+                            <strong>Hey!</strong> provided stop name exists inside stops table. Remove it or update
                             before adding.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-
-                        <form th:action="@{/api/v1/streets/search}" method="post">
+                        <form th:action="@{/api/v1/stops/search}" th:object="${stop}" method="post">
                             <div class="input-group mb-3">
-                                <input type="search" class="form-control" placeholder="Street's to search"
-                                       aria-label="Search" th:value="${streetName}" name="streetName">
+                                <input type="search" class="form-control" placeholder="Stop's to search"
+                                       aria-label="Search" th:field="*{name}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </div>
                             </div>
                         </form>
-                        <form th:action="@{/api/v1/streets/insert}" th:object="${street}" method="post">
+                        <form th:action="@{/api/v1/stops/insert}" th:object="${stop}" method="post">
                             <div class="form-group mt-2 mb-1">
                                 <select class="custom-select" multiple>
-                                    <option th:each="street : ${streets}" th:value="${street.getId()}"
-                                            th:text="${street.getName()}"></option>
+                                    <option th:each="stop : ${stops}" th:value="${stop.getId()}"
+                                            th:text="${stop.getName()}"></option>
                                 </select>
                             </div>
                             <div class="form-group mt-2 mb-1">
-                                <label for="streetId">ID:</label>
-                                <input type="text" class="form-control" id="streetId" aria-describedby="streetIdHelp"
-                                       readonly th:value="${street.getId() > 0} ? *{id} : null">
+                                <label for="stopId">ID:</label>
+                                <input type="text" class="form-control" id="stopId" aria-describedby="streetIdHelp"
+                                       readonly th:value="${stop.getId() > 0} ? *{id} : null">
                                 <small id="streetIdHelp" class="form-text text-muted">ID only for reading
                                     purposes.</small>
                             </div>
                             <div class="form-group mt-2 mb-1">
-                                <label for="streetInput">Street address:</label>
-                                <input type="text" class="form-control" id="streetInput" aria-describedby="streetHelp"
+                                <label for="stopInput">Stop name:</label>
+                                <input type="text" class="form-control" id="stopInput" aria-describedby="stopHelp"
                                        th:value="*{name}" th:field="*{name}">
+                                <small id="stopHelp" class="form-text text-muted">Before adding street make sure it
+                                    exists.</small>
+                            </div>
+
+
+                            <div class="form-group mt-2 mb-1">
+                                <label for="streetInput">ID:</label>
+                                <input type="text" class="form-control" id="streetInput" aria-describedby="streetHelp"
+                                       th:value="${streetId}" name="streetId">
                                 <small id="streetHelp" class="form-text text-muted">Before adding street make sure it
                                     exists.</small>
                             </div>
+
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="submit" class="btn btn-danger" th:formaction="@{/api/v1/streets/remove}"
+                            <button type="submit" class="btn btn-danger" th:formaction="@{/api/v1/stops/remove}"
                                     th:field="${street}">Delete
                             </button>
                         </form>
