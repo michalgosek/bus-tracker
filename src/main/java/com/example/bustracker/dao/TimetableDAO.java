@@ -1,6 +1,6 @@
 package com.example.bustracker.dao;
 
-import com.example.bustracker.city.timetable.Schedule;
+import com.example.bustracker.city.schedule.Schedule;
 
 import java.util.List;
 

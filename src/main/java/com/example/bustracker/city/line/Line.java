@@ -1,7 +1,7 @@
 package com.example.bustracker.city.line;
 
 import com.example.bustracker.city.stop.Stop;
-import com.example.bustracker.city.timetable.Schedule;
+import com.example.bustracker.city.schedule.Schedule;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

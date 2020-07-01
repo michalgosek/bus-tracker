@@ -1,4 +1,4 @@
-package com.example.bustracker.city.timetable;
+package com.example.bustracker.city.schedule;
 
 import com.example.bustracker.city.line.Line;
 import com.example.bustracker.dao.LineDAO;

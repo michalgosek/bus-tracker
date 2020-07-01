@@ -18,15 +18,29 @@ INSERT INTO stops VALUES(3, 'Wapiennikowa / Ściegiennego', 2);
 INSERT INTO bus_lines VALUES(1, 'Kolberga', 5, 1);
 
 INSERT INTO time_schedule VALUES(1, 1, '10:30', 1);
-INSERT INTO time_schedule VALUES(1, 1, '12:30', 1);
-INSERT INTO time_schedule VALUES(1, 1, '13:30', 1);
-INSERT INTO time_schedule VALUES(1, 1, '14:30', 1);
+INSERT INTO time_schedule VALUES(2, 1, '12:30', 1);
+INSERT INTO time_schedule VALUES(3, 1, '13:30', 1);
+INSERT INTO time_schedule VALUES(4, 1, '14:30', 1);
 
+INSERT INTO time_schedule VALUES(5, 2, '10:30', 1);
+INSERT INTO time_schedule VALUES(6, 2, '12:30', 1);
+INSERT INTO time_schedule VALUES(7, 2, '13:30', 1);
+INSERT INTO time_schedule VALUES(8, 2, '14:30', 1);
 
-
-
-
+ 
 INSERT INTO bus_lines VALUES(2, 'Wazna', 5, 1);
+
+INSERT INTO time_schedule VALUES(9, 1, '10:20', 2);
+INSERT INTO time_schedule VALUES(10, 1, '12:30', 2);
+INSERT INTO time_schedule VALUES(11, 1, '13:40', 2);
+INSERT INTO time_schedule VALUES(12, 1, '14:50', 2);
+
+INSERT INTO time_schedule VALUES(13, 2, '10:10', 2);
+INSERT INTO time_schedule VALUES(14, 2, '12:30', 2);
+INSERT INTO time_schedule VALUES(15, 2, '13:40', 2);
+INSERT INTO time_schedule VALUES(16, 2, '14:50', 2);
+
+
 
 
 INSERT INTO bus_lines VALUES(3, 'Kolberga1', 5, 2);

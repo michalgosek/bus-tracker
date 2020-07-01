@@ -1,6 +1,6 @@
-package com.example.bustracker.city.timetable.storage.mysql;
+package com.example.bustracker.city.schedule.storage.mysql;
 
-import com.example.bustracker.city.timetable.Schedule;
+import com.example.bustracker.city.schedule.Schedule;
 import org.springframework.jdbc.core.RowMapper;
 
 public final class Mapper {

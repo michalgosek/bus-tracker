@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name = "stops")
 @Data
 @NoArgsConstructor
-
 public class Stop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
