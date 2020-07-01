@@ -4,7 +4,6 @@ import com.example.bustracker.city.line.Line;
 import com.example.bustracker.city.street.Street;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -38,5 +37,9 @@ public class Stop {
         this.id = id;
         this.name = name;
         this.street = new Street(streetId);
+    }
+
+    public Stop(Long id) {
+        this.id = id;
     }
 }

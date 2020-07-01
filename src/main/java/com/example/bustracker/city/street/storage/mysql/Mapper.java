@@ -12,10 +12,6 @@ public final class Mapper {
         };
     }
     static RowMapper<Street> MapStreets(){
-        return (rs, rowNum) -> {
-            final Long id = rs.getLong("id");
-            final String streetName = rs.getString("name");
-            return new Street(id, streetName);
-        };
+        return MapStreet();
     }
 }

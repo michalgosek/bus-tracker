@@ -31,6 +31,10 @@ public class StopService {
         return stopDAO.getStopByName(stopName);
     }
 
+    public Optional<Stop> getStopById(Long id) {
+        return stopDAO.getStopById(id);
+    }
+
     public void insertStop(Stop stop, Long id) {
         stopDAO.insertStop(stop, id);
     }

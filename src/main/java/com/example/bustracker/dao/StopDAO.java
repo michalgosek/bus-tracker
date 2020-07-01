@@ -10,6 +10,8 @@ public interface StopDAO {
 
     List<Stop> getStopsWithStreetId(Long id);
 
+    Optional<Stop> getStopById(Long id);
+
     Optional<Stop> getStopByName(String stopName);
 
     int insertStop(Stop stop, Long id);

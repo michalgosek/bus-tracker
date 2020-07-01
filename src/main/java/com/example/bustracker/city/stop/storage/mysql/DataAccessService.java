@@ -1,6 +1,7 @@
 package com.example.bustracker.city.stop.storage.mysql;
 
 import com.example.bustracker.city.stop.Stop;
+import com.example.bustracker.city.street.Street;
 import com.example.bustracker.dao.StopDAO;
 import com.example.bustracker.extractor.Extractor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class DataAccessService implements StopDAO {
     public Optional<Stop> getStopByName(String stopName) {
         final String query = "SELECT * FROM stops WHERE name = ?";
         return jdbcTemplate.query(query, EXTRACTOR_STOP, stopName);
+    }
+
+    @Override
+    public Optional<Stop> getStopById(Long id) {
+        final String query = "SELECT * FROM stops WHERE id = ?";
+        return jdbcTemplate.query(query, EXTRACTOR_STOP, id);
     }
 
     @Override

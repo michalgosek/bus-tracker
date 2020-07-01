@@ -1,6 +1,5 @@
 package com.example.bustracker.city.stop;
 
-import com.example.bustracker.city.street.Street;
 import com.example.bustracker.city.street.StreetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

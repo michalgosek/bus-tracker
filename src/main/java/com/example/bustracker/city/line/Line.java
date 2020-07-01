@@ -31,6 +31,6 @@ public class Line {
         this.id = id;
         this.direction = direction;
         this.lineNumber = lineNumber;
-        stop.setId(stopId);
+        this.stop = new Stop(stopId);
     }
 }
