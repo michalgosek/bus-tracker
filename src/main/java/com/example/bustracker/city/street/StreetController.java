@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -23,6 +24,13 @@ public class StreetController{
     public String getStreets(Model model){
             List<Street> streetList = streetService.getAllStreets();
             model.addAttribute("streets", streetList);
-            return "street";
+            return "streets";
+    }
+
+    @GetMapping("/{streetId}" )
+    public String getStreetView(Model model, @PathVariable("streetId") Long streetId) {
+        System.out.println(streetId);
+        model.addAttribute("streetId", streetId);
+        return "stop";
     }
 }

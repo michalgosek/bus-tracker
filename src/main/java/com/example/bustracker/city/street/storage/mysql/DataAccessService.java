@@ -1,4 +1,4 @@
-package com.example.bustracker.city.street.dataaccess.mysql;
+package com.example.bustracker.city.street.storage.mysql;
 
 import com.example.bustracker.city.street.Street;
 import com.example.bustracker.dao.StreetDAO;
